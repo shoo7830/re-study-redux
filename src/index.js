@@ -1,24 +1,24 @@
-import { createStore} from  'redux';
+import React from 'react';
+import ReactDOM from 'react-dom';
 
-const counter = (state = 0, action) => {
-    switch (action.type) {
-        case 'INCREMENT':
-            return state + 1;
-        case 'DECREMENT':
-            return state - 1;
-        default:
-            return state;
-    }
-}
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
 
-const store = createStore(counter);
+import App from './components/App';
+import reducers from './reducers';
 
-store.subscribe(() => {
-    console.log(store.getState());
-})
+const store = createStore(
+    reducers,
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+);
 
-store.dispatch({type: 'INCREMENT'});
-// store.dispatch({type: 'INCREMENT'});
-// store.dispatch({type: 'INCREMENT'});
-// store.dispatch({type: 'INCREMENT'});
-// store.dispatch({type: 'INCREMENT'});
+const Entry = () => (
+    <Provider store={store}>
+        <App />
+    </Provider>
+    
+)
+ 
+
+
+ReactDOM.render(<Entry />, document.querySelector("#app"));
